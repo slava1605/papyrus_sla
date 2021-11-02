@@ -1,0 +1,100 @@
+
+
+<div class='container'> 
+    
+    <div class='title-section'>
+        <h2>
+            We Are Bioconjugation Experts
+        </h2>
+        <h1> Choose Molecules To Conjugate </h1>
+        <!--img src='../../assets/img/logo6.png' alt='home-logo' /-->
+    </div>
+    <div class='molecule-section'> 
+
+        <p class='molecule-selection-detail'> 
+            <label>I'd like to attach a </label>
+            <mat-form-field appearance="fill" class='m-form-field'>
+                <mat-label>Select an option</mat-label>
+                <mat-select matNativeControl [(value)]='molecule1' (selectionChange)='searchProduct(1)'>
+                    <mat-option *ngFor="let c of molecules" [value]="c.id">{{c.name}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            
+            <label> to a </label>
+            <mat-form-field appearance="fill"  class='m-form-field'>
+                <mat-label>Select an option</mat-label>
+                <mat-select matNativeControl [(value)]="molecule2" (selectionChange)='searchProduct(2)'>
+                    <mat-option *ngFor="let c of molecules" [value]="c.id">{{c.name}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </p>
+        <p *ngIf="molecule1!='-1' && molecule2!='-1'">
+            My <input [value]='getMolecule(1)' class='molecule-input' placeholder="Molecule 1" disabled/> has several 
+            <mat-form-field appearance="fill"  class='m-form-field'>
+                <mat-label>Select an option</mat-label>
+                <mat-select [(value)]="group1" (selectionChange)='searchProduct(3)'>
+                    <mat-option *ngFor="let c of groups" [value]="c.id">{{c.name}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            functional groups
+        </p>
+    
+        <p *ngIf="molecule1!='-1' && molecule2!='-1'">
+            My <input [value]='getMolecule(2)' class='molecule-input' placeholder="Molecule 2" disabled /> has several 
+            <mat-form-field appearance="fill"  class='m-form-field'>
+                <mat-label>Select an option</mat-label>
+                <mat-select [(value)]="group2" (selectionChange)='searchProduct(4)'>
+                    <mat-option *ngFor="let c of groups" [value]="c.id">{{c.name}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            functional groups
+        </p>
+        <table class='product-table' *ngIf="molecule1!='-1' && molecule2!='-1' && group1!= '-1' && group2!='-1'">
+            <thead>
+                <tr>
+                    <th class='th1'>Product</th>
+                    <th class='th2'>Kit Name</th>
+                    <th class='th3'>Description</th>
+                    <th class='th4'> </th>
+                </tr>
+            </thead>
+            
+            <tr *ngFor="let r of products">
+                <td class='th1'><img src="{{r.thumbnail}}" /></td>
+                <td class='th2'>{{r.name}}</td>
+                <td class='th3'>{{r.description}}</td>
+                <td class='th4'><a mat-raised-button class='more-btn' (click)='linkToProductDetail(r)'>More</a></td>
+            </tr>
+            
+        </table>
+    </div>
+    
+    
+</div>
+
+<div class='category-overview'>
+
+    <carousel class='mobile-only'>
+        <ng-container *ngFor="let category of categories;">
+            {{category.name}}
+            <ng-container *carouselItem>
+                <div class='item'>
+                    <img *ngIf="category.name!=''" src="{{category.thumbnail}}" />
+                    <a (click)="linkToBrowse(category)"> <h2>{{category.name}}</h2> </a>
+                    <p>{{category.description}}</p>
+                </div>
+            </ng-container>
+        </ng-container>
+    </carousel>
+    
+    <div *ngFor="let category of categories" class="category-detail">
+        <a (click)="linkToBrowse(category)">
+            <img *ngIf="category.name!=''" src="{{category.thumbnail}}" />
+            <h2>{{category.name}}</h2> 
+            <p>{{category.description}}</p>
+        </a>
+    </div>    
+</div>
+
+
+<footer style='width:100%; opacity: 0.6;'> </footer>
